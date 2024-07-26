@@ -55,6 +55,8 @@ func handleCreatePaymentIntent(c *gin.Context) {
 		Country   string `json:"country"`
 	}
 
+	log.Println("Incoming request:", c.Request.Method, c.Request.URL.Path)
+
 	// Bind JSON request body to struct
 	if err := c.BindJSON(&req); err != nil {
 		log.Printf("Error binding JSON: %v", err)
@@ -79,6 +81,7 @@ func handleCreatePaymentIntent(c *gin.Context) {
 		return
 	}
 
+	log.Printf("PaymentIntent created: %s", paymentIntent.ClientSecret)
 	// Send response back to the frontend
 	var response struct {
 		ClientSecret string `json:"clientSecret"`

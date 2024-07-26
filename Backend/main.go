@@ -24,7 +24,7 @@ func main() {
 	router := gin.Default()
 
 	config := cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"http://localhost:6969"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
 		AllowCredentials: true,
@@ -63,6 +63,15 @@ func handleCreatePaymentIntent(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	if req.ProductId == "" {
+		log.Printf("Error: missing product_id")
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Missing product_id"})
+		return
+	}
+
+	// Log request data
+	log.Printf("Request data: %+v", req)
 
 	// Create PaymentIntent parameters
 	params := &stripe.PaymentIntentParams{

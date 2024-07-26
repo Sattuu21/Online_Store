@@ -3,7 +3,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm"; // Ensure this path is correct
 
-const stripePromise = loadStripe("sk_test_51PehjqRsBzWtaf8bN3c0hHE7bIAv8HMyF0UHGUl5kkPqweeqT6lgJojHcLUzoUaTRO26lCZq1Ekar0QszRRtBo4e00R6ecPEfp"); // Replace with your actual Stripe publishable key
+const stripePromise = loadStripe("pk_test_51PehjqRsBzWtaf8b3OTB0c2JAcivMWtr0ncB8T8ZlxIaZbBmhZV2Lpud6twoIZgdRTDJ4wUcomBmBEVnKDxKxNlG00LhbPXoRZ"); 
 
 export default function StripePayment({ customerData }) {
   const [clientSecret, setClientSecret] = useState("");

@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
-import { Link as LinkDom } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const description = ["100% recycled materials", "6 month's warranty", "free repairs"];
 
@@ -62,7 +62,13 @@ const footers = [
   },
 ];
 
-function ProductContent({ customerData }) {
+function ProductContent() {
+  const navigate = useNavigate();
+
+  const handleBuyNow = (productId) => {
+    navigate("/checkout", { state: { product_id: productId } });
+  };
+
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }} />
@@ -73,7 +79,6 @@ function ProductContent({ customerData }) {
         elevation={0}
         sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       ></AppBar>
-      {/* Hero unit */}
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
           Products
@@ -84,13 +89,10 @@ function ProductContent({ customerData }) {
           another product from us again. This reduces consumer waste and helps to protect our
           planet.
         </Typography>
-      </Container> 
-      
-      {/* End hero unit */}
+      </Container>
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
-            // Enterprise card is full width at sm breakpoint
             <Grid item key={tier.title} xs={12} sm={tier.title === "Enterprise" ? 12 : 6} md={4}>
               <Card>
                 <CardHeader
@@ -136,9 +138,7 @@ function ProductContent({ customerData }) {
                   <Button
                     fullWidth
                     variant={tier.buttonVariant}
-                    component={LinkDom}
-                    to="/checkout"
-                    onClick={() => (customerData["product_id"] = tier["title"])}
+                    onClick={() => handleBuyNow(tier.title)}
                   >
                     {tier.buttonText}
                   </Button>
@@ -148,7 +148,6 @@ function ProductContent({ customerData }) {
           ))}
         </Grid>
       </Container>
-      {/* Footer */}
       <Container
         maxWidth="md"
         component="footer"
@@ -177,11 +176,10 @@ function ProductContent({ customerData }) {
           ))}
         </Grid>
       </Container>
-      {/* End footer */}
     </React.Fragment>
   );
 }
 
-export default function Product({ customerData }) {
-  return <ProductContent customerData={customerData} />;
+export default function Product() {
+  return <ProductContent />;
 }

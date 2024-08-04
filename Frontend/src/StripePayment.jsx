@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm"; // Ensure this path is correct
 
-const stripePromise = loadStripe("pk_test_51PehjqRsBzWtaf8b3OTB0c2JAcivMWtr0ncB8T8ZlxIaZbBmhZV2Lpud6twoIZgdRTDJ4wUcomBmBEVnKDxKxNlG00LhbPXoRZ"); 
+const stripePromise = loadStripe("pk_test_51PehjqRsBzWtaf8b3OTB0c2JAcivMWtr0ncB8T8ZlxIaZbBmhZV2Lpud6twoIZgdRTDJ4wUcomBmBEVnKDxKxNlG00LhbPXoRZ");
 
 export default function StripePayment({ customerData }) {
+  const location = useLocation();
+  const { product_id } = location.state || {}; // Access product_id from state
   const [clientSecret, setClientSecret] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!product_id) {
+      setError("Missing product_id");
+      return;
+    }
+
     const createPaymentIntent = async () => {
       try {
-        const response = await fetch("/create-payment-intent", {
+        const response = await fetch("http://localhost:8080/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(customerData),
+          body: JSON.stringify({
+            ...customerData,
+            product_id, // Include product_id here
+          }),
         });
 
         if (!response.ok) {
@@ -35,8 +46,8 @@ export default function StripePayment({ customerData }) {
       }
     };
 
-   createPaymentIntent();
-  }, [customerData]);
+    createPaymentIntent();
+  }, [customerData, product_id]);
 
   const appearance = {
     theme: "stripe",

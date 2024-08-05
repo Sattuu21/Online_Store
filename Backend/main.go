@@ -33,8 +33,8 @@ func main() {
 
 	router.Use(cors.New(config))
 
-	router.POST("/create-payment-intent", handleCreatePaymentIntent)
-	router.GET("/health", handleHealth)
+	router.POST("/api/create-payment-intent", handleCreatePaymentIntent)
+	router.GET("/api/health", handleHealth)
 
 	// Start the server
 	err = router.Run("localhost:8080")

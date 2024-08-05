@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import Layout from "./Layout";
+import Home from "./Home";
 import Product from "./Product";
 import Checkout from "./Checkout";
 import SuccessPage from "./SuccessPage";
@@ -16,6 +17,7 @@ const customerData = {};
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
+      <Route index element={<Home />} /> {/* Default route */}
       <Route path="product" element={<Product customerData={customerData} />} />
       <Route path="checkout" element={<Checkout customerData={customerData} />} />
       <Route path="success" element={<SuccessPage customerData={customerData} />} />

@@ -6,7 +6,12 @@ import Link from "@mui/material/Link";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link as RouterLink } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 
 function Copyright() {
   return (
@@ -24,9 +29,24 @@ function Copyright() {
 export default function Layout() {
   return (
     <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
-      <Container maxWidth="100%">
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            My Website
+          </Typography>
+          <Button color="inherit" component={RouterLink} to="/">
+            Home
+          </Button>
+          <Button color="inherit" component={RouterLink} to="/product">
+            Product
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="md">
         <Box sx={{ my: 4 }}>
           <Outlet />
           <Copyright />

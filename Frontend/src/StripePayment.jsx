@@ -20,7 +20,7 @@ export default function StripePayment({ customerData }) {
 
     const createPaymentIntent = async () => {
       try {
-        const response = await fetch("http://158.101.198.22:8080/create-payment-intent", {
+        const response = await fetch("https://store.amanprasad.me/api/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
